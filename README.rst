@@ -110,6 +110,27 @@ installation.
         wal_level = archive
         max_wal_senders = 4
 
+    If you are using pg_receivexlog to receive WALs it is strongly recommended
+    you use replication slots (supported in postgres >= 9.4); to do so requires
+    additional server side configuration. In addition to configuring ``wal_level``
+    and ``max_wal_senders`` as mentioned above you will also need to set
+    ``max_replication_slots`` and create a slot for pghoard.  Starting with
+    9.5 you can create the slot with pg_receivexlog although we do not currently
+    do this automatically.  You can create a slot with the following sql command::
+
+     SELECT * FROM pg_create_physical_replication_slot('pghoard');
+
+    You will also need to add a slot attribute to your node definition. For the
+    example above your node definition may look like this::
+
+     { 
+     "host": "127.0.0.1",
+     "password": "example",
+     "port": 5433,
+     "slot": "pghoard",
+     "user": "replication"
+     }
+
 1. Create a suitable PostgreSQL user account for pghoard::
 
      CREATE USER pghoard PASSWORD 'putyourpasswordhere' REPLICATION;
