@@ -35,7 +35,7 @@ class TestWebServer:
         status = conn.request("GET", "/status")
         status = conn.getresponse().status
         assert status == 200
-        #assert pghoard.requested_basebackup_sites == {"test_requesting_basebackup"}
+        # assert pghoard.requested_basebackup_sites == {"test_requesting_basebackup"}
 
     def test_list_empty_basebackups(self, pghoard, http_restore, capsys):  # pylint: disable=redefined-outer-name
         # List with direct HttpRestore access
