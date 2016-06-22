@@ -315,6 +315,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                                       site, obname, time.monotonic() - start_time)
                 with suppress(Exception):
                     os.unlink(tmp_target_path)
+                    
     def get_status(self, site):
         state_file_path = self.server.config["json_state_file_path"]
         if os.path.exists(state_file_path):
