@@ -320,7 +320,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         if os.path.exists(state_file_path):
             # response = self._transfer_agent_op(site, "", "basebackup", "LIST")
             raise HttpResponse({"status": "okay"}, status=200)
-        else
+        else:
             raise HttpResponse(status=404)
 
     def get_wal_or_timeline_file(self, site, filename, filetype):
