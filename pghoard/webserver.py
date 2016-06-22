@@ -318,8 +318,8 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     def get_status(self, site):
         state_file_path = self.server.config["json_state_file_path"]
-        #TODO do something special for site status
-        if site == None:
+        # TODO do something special for site status
+        if site is None:
             if os.path.exists(state_file_path):
                 # response = self._transfer_agent_op(site, "", "basebackup", "LIST")
                 raise HttpResponse({"status": "okay"}, status=200)
