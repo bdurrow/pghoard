@@ -317,8 +317,8 @@ class RequestHandler(BaseHTTPRequestHandler):
                     os.unlink(tmp_target_path)
     def get_status(self, site):
         state_file_path = self.server.config["json_state_file_path"]
-        if os.path.exists(state_file_path)
-            response = self._transfer_agent_op(site, "", "basebackup", "LIST")
+        if os.path.exists(state_file_path):
+            # response = self._transfer_agent_op(site, "", "basebackup", "LIST")
             raise HttpResponse({"status": "okay"}, status=200)
         else
             raise HttpResponse(status=404)
