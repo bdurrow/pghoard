@@ -318,11 +318,13 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     def get_status(self, site):
         state_file_path = self.server.config["json_state_file_path"]
-        if os.path.exists(state_file_path):
-            # response = self._transfer_agent_op(site, "", "basebackup", "LIST")
-            raise HttpResponse({"status": "okay"}, status=200)
-        else:
-            raise HttpResponse(status=404)
+        #TODO do something special for site status
+        if site == None:
+            if os.path.exists(state_file_path):
+                # response = self._transfer_agent_op(site, "", "basebackup", "LIST")
+                raise HttpResponse({"status": "okay"}, status=200)
+            else:
+                raise HttpResponse(status=404)
 
     def get_wal_or_timeline_file(self, site, filename, filetype):
         target_path = self.headers.get("x-pghoard-target-path")
