@@ -426,7 +426,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             site, obtype, obname = self._parse_request(path)
             if obtype == "basebackup":
                 self.list_basebackups(site)
-            elif obtype == "status"
+            elif obtype == "status":
                 self.get_status
             else:
                 self.get_wal_or_timeline_file(site, obname, obtype)
