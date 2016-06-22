@@ -138,6 +138,9 @@ class RequestHandler(BaseHTTPRequestHandler):
         self.wfile.write(bmsg)
 
     def _parse_request(self, path):
+        if path[0] == "status":
+            return (None, "status", None)
+
         if len(path) < 2:
             raise HttpResponse("Invalid path {!r}".format(path), status=400)
 
@@ -312,6 +315,12 @@ class RequestHandler(BaseHTTPRequestHandler):
                                       site, obname, time.monotonic() - start_time)
                 with suppress(Exception):
                     os.unlink(tmp_target_path)
+    def get_status(self, site):
+        if os.path.exists("")
+            response = self._transfer_agent_op(site, "", "basebackup", "LIST")
+            raise HttpResponse({"status": "okay"}, status=200)
+        else
+            raise HttpResponse(status=404)
 
     def get_wal_or_timeline_file(self, site, filename, filetype):
         target_path = self.headers.get("x-pghoard-target-path")
@@ -416,5 +425,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             site, obtype, obname = self._parse_request(path)
             if obtype == "basebackup":
                 self.list_basebackups(site)
+            elif obtype == "status"
+                self.get_status
             else:
                 self.get_wal_or_timeline_file(site, obname, obtype)
