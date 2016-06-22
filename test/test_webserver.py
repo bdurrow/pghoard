@@ -30,6 +30,13 @@ def http_restore(pghoard):
 
 
 class TestWebServer:
+    def test_requesting_status(self, pghoard):
+        conn = HTTPConnection(host="127.0.0.1", port=pghoard.config["http_port"])
+        status = conn.request("GET", "/status")
+        status = conn.getresponse().status
+        assert status == 200
+        #assert pghoard.requested_basebackup_sites == {"test_requesting_basebackup"}
+
     def test_list_empty_basebackups(self, pghoard, http_restore, capsys):  # pylint: disable=redefined-outer-name
         # List with direct HttpRestore access
         assert http_restore.list_basebackups() == []
