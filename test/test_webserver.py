@@ -24,7 +24,6 @@ import socket
 import time
 
 
-
 @pytest.fixture
 def http_restore(pghoard):
     pgdata = os.path.dirname(pghoard.config["backup_sites"][pghoard.test_site]["pg_xlog_directory"])
