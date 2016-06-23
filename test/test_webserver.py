@@ -34,7 +34,7 @@ def http_restore(pghoard):
 class TestWebServer:
     def test_requesting_status(self, pghoard):
         conn = HTTPConnection(host="127.0.0.1", port=pghoard.config["http_port"])
-        request = conn.request("GET", "/status")
+        response = conn.request("GET", "/status")
         response = conn.getresponse()
         response_parsed = json.loads(response.read())
         assert response.status == 200
