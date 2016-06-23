@@ -326,7 +326,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 raise HttpResponse(state_json_data, status=200)
             else:
                 raise HttpResponse(status=404)  # Not Found
-            except (IOError,OSError,TypeError):
+            except(IOError,OSError,TypeError):
                 raise HttpResponse(status=500)
         else:
                 # TODO: Handle site specific status
