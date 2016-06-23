@@ -332,9 +332,8 @@ class RequestHandler(BaseHTTPRequestHandler):
                     # I suggest sending 406 if the site doesn't exist.
                     # Right now we will return 400 because this isn't implmented yet
                     raise HttpResponse(status=400)  # Bad Request
-        except (IOError,OSError,TypeError):
+        except (IOError, OSError, TypeError):
             raise HttpResponse(status=500)
-
 
     def get_wal_or_timeline_file(self, site, filename, filetype):
         target_path = self.headers.get("x-pghoard-target-path")
