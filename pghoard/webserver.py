@@ -319,10 +319,16 @@ class RequestHandler(BaseHTTPRequestHandler):
     def get_status(self, site):
         state_file_path = self.server.config["json_state_file_path"]
         # TODO do something special for site status
+        # TODO instead of reading from the file it would be great if we could get
+        # the state from the existing data scructure.  I don't know how to do this.
         if site is None:
             if os.path.exists(state_file_path):
                 # response = self._transfer_agent_op(site, "", "basebackup", "LIST")
-                raise HttpResponse(self.server.state, status=200)
+                with open(state_file_path, 'r') as fp:
+                    state_json_data = fp.read()
+                    print state_json_data
+                # TODO explicitly close file
+                raise HttpResponse(state_json_data, status=200)
             else:
                 raise HttpResponse(status=404)
 
