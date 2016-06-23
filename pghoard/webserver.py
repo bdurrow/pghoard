@@ -326,7 +326,7 @@ class RequestHandler(BaseHTTPRequestHandler):
                 # response = self._transfer_agent_op(site, "", "basebackup", "LIST")
                 with open(state_file_path, 'r') as fp:
                     state_json_data = fp.read()
-                    print state_json_data
+                    print(state_json_data)
                 # TODO explicitly close file
                 raise HttpResponse(state_json_data, status=200)
             else:
