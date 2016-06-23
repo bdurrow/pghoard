@@ -15,12 +15,14 @@ from pghoard.postgres_command import archive_command, restore_command
 from pghoard.restore import HTTPRestore, Restore
 from pghoard.rohmu.encryptor import Encryptor
 from queue import Queue
+import json
 import logging
 import os
 import psycopg2
 import pytest
 import socket
 import time
+
 
 
 @pytest.fixture
@@ -32,10 +34,12 @@ def http_restore(pghoard):
 class TestWebServer:
     def test_requesting_status(self, pghoard):
         conn = HTTPConnection(host="127.0.0.1", port=pghoard.config["http_port"])
-        status = conn.request("GET", "/status")
-        status = conn.getresponse().status
-        assert status == 200
-        # assert pghoard.requested_basebackup_sites == {"test_requesting_basebackup"}
+        request = conn.request("GET", "/status")
+        response = conn.getresponse()
+        response_parsed = json.loads(response.read())
+        assert response.status == 200
+        # "startup_time": "2016-06-23T14:53:25.840787",
+        assert response_parsed['startup_time'] is not None
 
     def test_list_empty_basebackups(self, pghoard, http_restore, capsys):  # pylint: disable=redefined-outer-name
         # List with direct HttpRestore access
