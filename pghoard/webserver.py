@@ -325,12 +325,14 @@ class RequestHandler(BaseHTTPRequestHandler):
                 fp.close()
                 raise HttpResponse(state_json_data, status=200)
             else:
-                raise HttpResponse(status=404) #Not Found
+                raise HttpResponse(status=404)  # Not Found
+            except (IOError,OSError,TypeError):
+                raise HttpResponse(status=500)
         else:
                 # TODO: Handle site specific status
                 # I suggest sending 406 if the site doesn't exist.
                 # Right now we will return 400 because this isn't implmented yet
-                raise HttpResponse(status=400) #Bad Request
+                raise HttpResponse(status=400)  # Bad Request
 
     def get_wal_or_timeline_file(self, site, filename, filetype):
         target_path = self.headers.get("x-pghoard-target-path")
