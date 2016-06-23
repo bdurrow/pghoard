@@ -318,19 +318,19 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     def get_status(self, site):
         state_file_path = self.server.config["json_state_file_path"]
-        # TODO do something special for site status
-        # TODO instead of reading from the file it would be great if we could get
-        # the state from the existing data scructure.  I don't know how to do this.
         if site is None:
             if os.path.exists(state_file_path):
-                # response = self._transfer_agent_op(site, "", "basebackup", "LIST")
                 with open(state_file_path, 'r') as fp:
-                    state_json_data = fp.read()
-                    print(state_json_data)
-                # TODO explicitly close file
+                    state_json_data = fp.readall()
+                fp.close()
                 raise HttpResponse(state_json_data, status=200)
             else:
-                raise HttpResponse(status=404)
+                raise HttpResponse(status=404) #Not Found
+        else:
+                # TODO: Handle site specific status
+                # I suggest sending 406 if the site doesn't exist.
+                # Right now we will return 400 because this isn't implmented yet
+                raise HttpResponse(status=400) #Bad Request
 
     def get_wal_or_timeline_file(self, site, filename, filetype):
         target_path = self.headers.get("x-pghoard-target-path")
