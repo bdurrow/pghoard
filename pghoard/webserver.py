@@ -322,7 +322,7 @@ class RequestHandler(BaseHTTPRequestHandler):
         if site is None:
             if os.path.exists(state_file_path):
                 # response = self._transfer_agent_op(site, "", "basebackup", "LIST")
-                raise HttpResponse({"status": "okay"}, status=200)
+                raise HttpResponse(self.server.state, status=200)
             else:
                 raise HttpResponse(status=404)
 
